@@ -2,16 +2,28 @@ module Players.List exposing (..)
 
 import Html exposing (..)
 import Html.Attributes exposing (class)
+import RemoteData exposing (WebData)
+
 import Msgs exposing (Msg)
 import Models exposing (Player)
 
-view : List Player -> Html Msg
-view players =
+view : WebData (List Player) -> Html Msg
+view response =
      div [] 
          [ 
            nav,
-           list players
+           maybeList response
          ]
+
+maybeList : WebData (List Player) -> Html Msg
+maybeList response = 
+    case response of 
+      RemoteData.NotAsked -> text ""
+      RemoteData.Loading -> text "Loading..."
+      RemoteData.Success players -> list players
+      RemoteData.Failure error -> text (toString error)
+
+          
 
 nav : Html Msg
 nav = 
