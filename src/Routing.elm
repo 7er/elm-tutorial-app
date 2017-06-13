@@ -5,6 +5,11 @@ import Models exposing (PlayerId, Route(..))
 
 import UrlParser exposing (..)
 
+playersPath : String
+playersPath = "#players"
+
+playerPath : PlayerId -> String
+playerPath id = "#players/" ++ id
 
 parseLocation : Location -> Route
 parseLocation location =
